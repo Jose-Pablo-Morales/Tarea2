@@ -196,18 +196,8 @@ int main(int argc,char **argv){
   
 
   
-  int exists=0;
-  while(exists!=1){
-    printf("Ingresa la instruccion: \n");
-    fgets(instruction,40,stdin);
-    for(i=0;i<n_superheros;i++){     
-      if(strstr(instruction,superheros_pointers[i]->name)!=NULL){
-        exists=1;
-        printf("Encontrado\n");
-        break;
-      }      
-    }
-  }
+  printf("Ingresa la instruccion: \n");
+  fgets(instruction,40,stdin);
 
   if(strstr(instruction,"tophero")==NULL && strstr(instruction,"hero")==NULL && strstr(instruction,"topvalue")==NULL) printf("Funcion invalida\n");
   //if else(){} agregar verificación de que esté el superheroe
@@ -230,14 +220,13 @@ int main(int argc,char **argv){
   if(strstr(instruction,"tophero")!=NULL){
     for(i=0;i<=n_superheros;i++){
       if(strstr(instruction,superheros_pointers[i]->name)!=NULL){
-        exists=1;
         if(strstr(instruction,"durability")!=NULL){
           printf("%s: %d\n", superheros_pointers[i]->name, superheros_pointers[i]->durability);
           int durability = superheros_pointers[i]->durability;
           qsort(superheros,n_superheros,sizeof(SUPERHERO),compare_durability);
           int counter = 0;
           for(int j=0;j<n_superheros;j++){
-            if(superheros_pointers[j]->durability>=durability){
+            if(superheros_pointers[j]->durability>durability){
               printf("\t%d) %s: %d\n",counter+1,superheros_pointers[j]->name,superheros_pointers[j]->durability);
               counter++;
               if(counter==10) break;
@@ -319,7 +308,32 @@ int main(int argc,char **argv){
     }
   }
   
-
+  if(strstr(instruction,"topvalue")!=NULL){
+    int value;
+    char instruction_aux[40];
+    strcpy(instruction_aux,instruction);
+    char *token = strtok(instruction, " ");
+    if(token != NULL){
+        for(int i=0;token != NULL;i++){
+            token = strtok(NULL, " ");
+            if (i==1) value = atoi(token);
+        }
+    }
+    for(i=0;i<=n_superheros;i++){
+      if(strstr(instruction_aux,"power")!=NULL){
+        qsort(superheros,n_superheros,sizeof(SUPERHERO),compare_power);
+        int counter = 0;
+          for(int j=0;j<n_superheros;j++){
+            if(superheros_pointers[j]->power>value){
+              printf("\t%d) %s: %d\n",counter+1,superheros_pointers[j]->name,superheros_pointers[j]->power);
+              counter++;
+              if(counter==10) break;
+            }
+          }
+        break; 
+      }     
+    }
+  }
 
 
 
