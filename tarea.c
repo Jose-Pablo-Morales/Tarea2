@@ -325,15 +325,72 @@ int main(int argc,char **argv){
         int counter = 0;
           for(int j=0;j<n_superheros;j++){
             if(superheros_pointers[j]->power>value){
-              printf("\t%d) %s: %d\n",counter+1,superheros_pointers[j]->name,superheros_pointers[j]->power);
+              printf("%d) %s: %d\n",counter+1,superheros_pointers[j]->name,superheros_pointers[j]->power);
               counter++;
               if(counter==10) break;
             }
           }
         break; 
-      }     
+      }
+      if(strstr(instruction_aux,"strength")!=NULL){
+        qsort(superheros,n_superheros,sizeof(SUPERHERO),compare_strength);
+        int counter = 0;
+          for(int j=0;j<n_superheros;j++){
+            if(superheros_pointers[j]->strength>value){
+              printf("%d) %s: %d\n",counter+1,superheros_pointers[j]->name,superheros_pointers[j]->strength);
+              counter++;
+              if(counter==10) break;
+            }
+          }
+        break; 
+      }  
+      if(strstr(instruction_aux,"intelligence")!=NULL){
+        qsort(superheros,n_superheros,sizeof(SUPERHERO),compare_intelligence);
+        int counter = 0;
+          for(int j=0;j<n_superheros;j++){
+            if(superheros_pointers[j]->intelligence>value){
+              printf("%d) %s: %d\n",counter+1,superheros_pointers[j]->name,superheros_pointers[j]->intelligence);
+              counter++;
+              if(counter==10) break;
+            }
+          }
+        break; 
+      }
+      if(strstr(instruction_aux,"speed")!=NULL){
+        qsort(superheros,n_superheros,sizeof(SUPERHERO),compare_speed);
+        int counter = 0;
+          for(int j=0;j<n_superheros;j++){
+            if(superheros_pointers[j]->speed>value){
+              printf("%d) %s: %d\n",counter+1,superheros_pointers[j]->name,superheros_pointers[j]->speed);
+              counter++;
+              if(counter==10) break;
+            }
+          }
+        break;   
     }
-  }
+    if(strstr(instruction_aux,"combat")!=NULL){
+        qsort(superheros,n_superheros,sizeof(SUPERHERO),compare_combat);
+        int counter = 0;
+          for(int j=0;j<n_superheros;j++){
+            if(superheros_pointers[j]->combat>value){
+              printf("%d) %s: %d\n",counter+1,superheros_pointers[j]->name,superheros_pointers[j]->combat);
+              counter++;
+              if(counter==10) break;
+            }
+          }
+        break; 
+    }
+    if(strstr(instruction_aux,"durability")!=NULL){
+        qsort(superheros,n_superheros,sizeof(SUPERHERO),compare_durability);
+        int counter = 0;
+          for(int j=0;j<n_superheros;j++){
+            if(superheros_pointers[j]->durability>value){
+              printf("%d) %s: %d\n",counter+1,superheros_pointers[j]->name,superheros_pointers[j]->durability);
+              counter++;
+              if(counter==10) break;
+            }
+          }
+        break; 
 
 
 
