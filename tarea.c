@@ -4,9 +4,7 @@
 //COMPILAR DE LA SIGUIENTE MANERA:
 //gcc -std=c99 -Wall -Wextra -Wundef -Werror -Wuninitialized -Winit-self tarea2.c -o tarea2
 
-
-int main(int argc,char **argv){
-  typedef struct{
+typedef struct{
   int id;
   char* name;
   int intelligence;
@@ -16,6 +14,63 @@ int main(int argc,char **argv){
   int power;
   int combat;
 } SUPERHERO;
+
+int compare_durability(const void * a, const void * b)
+{
+
+  SUPERHERO *orderA = (SUPERHERO *)a;
+  SUPERHERO *orderB = (SUPERHERO *)b;
+
+  return ( orderA->durability - orderB->durability);
+}
+
+int compare_power(const void * a, const void * b)
+{
+
+  SUPERHERO *orderA = (SUPERHERO *)a;
+  SUPERHERO *orderB = (SUPERHERO *)b;
+
+  return ( orderA->power - orderB->power);
+}
+
+int compare_intelligence(const void * a, const void * b)
+{
+
+  SUPERHERO *orderA = (SUPERHERO *)a;
+  SUPERHERO *orderB = (SUPERHERO *)b;
+
+  return ( orderA->intelligence - orderB->intelligence);
+}
+
+int compare_speed(const void * a, const void * b)
+{
+
+  SUPERHERO *orderA = (SUPERHERO *)a;
+  SUPERHERO *orderB = (SUPERHERO *)b;
+
+  return ( orderA->speed - orderB->speed);
+}
+
+int compare_strength(const void * a, const void * b)
+{
+
+  SUPERHERO *orderA = (SUPERHERO *)a;
+  SUPERHERO *orderB = (SUPERHERO *)b;
+
+  return ( orderA->strength - orderB->strength);
+}
+
+int compare_combat(const void * a, const void * b)
+{
+
+  SUPERHERO *orderA = (SUPERHERO *)a;
+  SUPERHERO *orderB = (SUPERHERO *)b;
+
+  return ( orderA->combat - orderB->combat);
+}
+
+
+int main(int argc,char **argv){
 
   FILE* data = fopen("data.txt", "r");
   char tmp;
@@ -132,9 +187,168 @@ int main(int argc,char **argv){
   
   printf("%s\n", superheros_pointers[200]->name);
   printf("%s\n", argv[1]);
+  printf("%d\n",argc);
+
+
+  char instruction[40];
   
+  int i;
+  
+
+  
+  int exists=0;
+  while(exists!=1){
+    printf("Ingresa la instruccion: \n");
+    fgets(instruction,40,stdin);
+    for(i=0;i<n_superheros;i++){     
+      if(strstr(instruction,superheros_pointers[i]->name)!=NULL){
+        exists=1;
+        printf("Encontrado\n");
+        break;
+      }      
+    }
+  }
+
+  if(strstr(instruction,"tophero")==NULL && strstr(instruction,"hero")==NULL && strstr(instruction,"topvalue")==NULL) printf("Funcion invalida\n");
+  //if else(){} agregar verificación de que esté el superheroe
+
+  if(strstr(instruction,"hero")!=NULL && strstr(instruction,"top")==NULL){
+    for(i=0;i<=n_superheros;i++){
+      if(strstr(instruction,superheros_pointers[i]->name)!=NULL){
+        printf("%s:\n", superheros_pointers[i]->name);
+        printf("\tdurability: %d\n", superheros_pointers[i]->durability);
+        printf("\tpower: %d\n", superheros_pointers[i]->power);
+        printf("\tstrength: %d\n", superheros_pointers[i]->strength);
+        printf("\tspeed: %d\n", superheros_pointers[i]->speed);
+        printf("\tcombat: %d\n", superheros_pointers[i]->combat);
+        printf("\tintelligence: %d\n", superheros_pointers[i]->intelligence);
+        break;
+      }
+    }
+  }
+
+  if(strstr(instruction,"tophero")!=NULL){
+    for(i=0;i<=n_superheros;i++){
+      if(strstr(instruction,superheros_pointers[i]->name)!=NULL){
+        exists=1;
+        if(strstr(instruction,"durability")!=NULL){
+          printf("%s: %d\n", superheros_pointers[i]->name, superheros_pointers[i]->durability);
+          int durability = superheros_pointers[i]->durability;
+          qsort(superheros,n_superheros,sizeof(SUPERHERO),compare_durability);
+          int counter = 0;
+          for(int j=0;j<n_superheros;j++){
+            if(superheros_pointers[j]->durability>=durability){
+              printf("\t%d) %s: %d\n",counter+1,superheros_pointers[j]->name,superheros_pointers[j]->durability);
+              counter++;
+              if(counter==10) break;
+            }
+          }                   
+        break;
+        }
+        if(strstr(instruction,"power")!=NULL){
+          printf("%s: %d\n", superheros_pointers[i]->name, superheros_pointers[i]->power);
+          int power = superheros_pointers[i]->power;
+          qsort(superheros,n_superheros,sizeof(SUPERHERO),compare_power);
+          int counter = 0;
+          for(int j=0;j<n_superheros;j++){
+            if(superheros_pointers[j]->power>power){
+              printf("\t%d) %s: %d\n",counter+1,superheros_pointers[j]->name,superheros_pointers[j]->power);
+              counter++;
+              if(counter==10) break;
+            }
+          }                   
+        break;
+        }
+        if(strstr(instruction,"intelligence")!=NULL){
+          printf("%s: %d\n", superheros_pointers[i]->name, superheros_pointers[i]->intelligence);
+          int intelligence = superheros_pointers[i]->intelligence;
+          qsort(superheros,n_superheros,sizeof(SUPERHERO),compare_intelligence);
+          int counter = 0;
+          for(int j=0;j<n_superheros;j++){
+            if(superheros_pointers[j]->intelligence>intelligence){
+              printf("\t%d) %s: %d\n",counter+1,superheros_pointers[j]->name,superheros_pointers[j]->intelligence);
+              counter++;
+              if(counter==10) break;
+            }
+          }                   
+        break;
+        }
+        if(strstr(instruction,"combat")!=NULL){
+          printf("%s: %d\n", superheros_pointers[i]->name, superheros_pointers[i]->combat);
+          int combat = superheros_pointers[i]->combat;
+          qsort(superheros,n_superheros,sizeof(SUPERHERO),compare_combat);
+          int counter = 0;
+          for(int j=0;j<n_superheros;j++){
+            if(superheros_pointers[j]->combat>combat){
+              printf("\t%d) %s: %d\n",counter+1,superheros_pointers[j]->name,superheros_pointers[j]->combat);
+              counter++;
+              if(counter==10) break;
+            }
+          }                   
+        break;
+        }
+        if(strstr(instruction,"speed")!=NULL){
+          printf("%s: %d\n", superheros_pointers[i]->name, superheros_pointers[i]->speed);
+          int speed = superheros_pointers[i]->speed;
+          qsort(superheros,n_superheros,sizeof(SUPERHERO),compare_speed);
+          int counter = 0;
+          for(int j=0;j<n_superheros;j++){
+            if(superheros_pointers[j]->speed>speed){
+              printf("\t%d) %s: %d\n",counter+1,superheros_pointers[j]->name,superheros_pointers[j]->speed);
+              counter++;
+              if(counter==10) break;
+            }
+          }                   
+        break;
+        }
+        if(strstr(instruction,"strength")!=NULL){
+          printf("%s: %d\n", superheros_pointers[i]->name, superheros_pointers[i]->strength);
+          int strength = superheros_pointers[i]->power;
+          qsort(superheros,n_superheros,sizeof(SUPERHERO),compare_strength);
+          int counter = 0;
+          for(int j=0;j<n_superheros;j++){
+            if(superheros_pointers[j]->strength>strength){
+              printf("\t%d) %s: %d\n",counter+1,superheros_pointers[j]->name,superheros_pointers[j]->strength);
+              counter++;
+              if(counter==10) break;
+            }
+          }                   
+        break;
+        }
+      }     
+    }
+  }
+  
+
+
+
+
+//topvalue power ##
+//tophero power spiderman
+//hero spiderman
+
+    /*int c=0;
+    while(instruction_array[i]!=NULL){
+
+      
+      instruction_array[++i] = strtok(NULL," ");
+    }
+  }
+
+  if(instruction_array[4]!=NULL){
+    instruction_array[3]=strcat(instruction_array[3],instruction_array[4]);
+    instruction_array[4]=NULL;
+
+  }
+
+  for (int i=0;i<4;i++){
+    printf("%s\n",instruction_array[i]);
+  }*/
+
   free(superheros);
   free(superheros_pointers);
+
   
   return 0;
 }
+
