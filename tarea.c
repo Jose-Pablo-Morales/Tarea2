@@ -15,6 +15,26 @@ typedef struct{
   int combat;
 } SUPERHERO;
 
+void hero_print(SUPERHERO** superheros_pointers,int n_superheros){
+char hero_name[20];
+printf("De que superhero desea ver su informacion :");
+fgets(hero_name,20,stdin);
+  for(int i=0;i<=n_superheros;i++){
+    if(strstr(hero_name,superheros_pointers[i]->name)!=NULL){
+      printf("%s:\n", superheros_pointers[i]->name);
+      printf("\tdurability: %d\n", superheros_pointers[i]->durability);
+      printf("\tpower: %d\n", superheros_pointers[i]->power);
+      printf("\tstrength: %d\n", superheros_pointers[i]->strength);
+      printf("\tspeed: %d\n", superheros_pointers[i]->speed);
+      printf("\tcombat: %d\n", superheros_pointers[i]->combat);
+      printf("\tintelligence: %d\n", superheros_pointers[i]->intelligence);
+      break;
+    }
+    else printf("No entra al if\n");
+  }
+}
+
+
 int compare_durability(const void * a, const void * b)
 {
 
@@ -70,7 +90,7 @@ int compare_combat(const void * a, const void * b)
 }
 
 
-int main(int argc,char **argv){
+int main(void){
 
   FILE* data = fopen("data.txt", "r");
   char tmp;
@@ -178,29 +198,21 @@ int main(int argc,char **argv){
     superheros_pointers[i] = &superheros[i];
   }
   
-  //flujo del programa
-
-  //if(argc>1){
-  //  printf("sirve\n");
-  //}
-  //else printf("no sirve\n");
-  
-  printf("%s\n", superheros_pointers[200]->name);
-  printf("%s\n", argv[1]);
-  printf("%d\n",argc);
-
-
   char instruction[40];
   
   int i;
-  
-
   
   printf("Ingresa la instruccion: \n");
   fgets(instruction,40,stdin);
 
   if(strstr(instruction,"tophero")==NULL && strstr(instruction,"hero")==NULL && strstr(instruction,"topvalue")==NULL) printf("Funcion invalida\n");
   //if else(){} agregar verificación de que esté el superheroe
+/*  int exists = 0;
+  for(i=0;i<n_superheros;i++){
+    if(strstr(instruction,superheros_pointers[i]->name)!=NULL) exists = 1;
+  }
+
+  if (exists==0) printf("Superheroe no encontrado\n");*/
 
   if(strstr(instruction,"hero")!=NULL && strstr(instruction,"top")==NULL){
     for(i=0;i<=n_superheros;i++){
@@ -301,7 +313,8 @@ int main(int argc,char **argv){
               counter++;
               if(counter==10) break;
             }
-          }                   
+          }
+        hero_print(superheros_pointers,n_superheros);                   
         break;
         }
       }     
@@ -332,7 +345,7 @@ int main(int argc,char **argv){
           }
         break; 
       }
-      if(strstr(instruction_aux,"strength")!=NULL){
+            if(strstr(instruction_aux,"strength")!=NULL){
         qsort(superheros,n_superheros,sizeof(SUPERHERO),compare_strength);
         int counter = 0;
           for(int j=0;j<n_superheros;j++){
@@ -390,36 +403,15 @@ int main(int argc,char **argv){
               if(counter==10) break;
             }
           }
-        break; 
-
-
-
-//topvalue power ##
-//tophero power spiderman
-//hero spiderman
-
-    /*int c=0;
-    while(instruction_array[i]!=NULL){
-
-      
-      instruction_array[++i] = strtok(NULL," ");
+        break;
+      }      
     }
-  }
-
-  if(instruction_array[4]!=NULL){
-    instruction_array[3]=strcat(instruction_array[3],instruction_array[4]);
-    instruction_array[4]=NULL;
-
-  }
-
-  for (int i=0;i<4;i++){
-    printf("%s\n",instruction_array[i]);
-  }*/
-
+  }  
+  
   free(superheros);
   free(superheros_pointers);
-
-  
+ 
   return 0;
 }
+
 
